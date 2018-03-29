@@ -10,23 +10,25 @@ export default class SignUpPage extends React.Component {
             username: '',
             password: '',
             confirmPassword: '',
+            hadWrongPass: false,
         };
     }
 
     signUp = () => {
-        // TODO: ADD ERROR MESSAGE FOR WRONG PASSWORDS
-        if (this.state.password !== this.state.confirmPassword) return;
+        if (this.state.password !== this.state.confirmPassword) {
+            this.setState({ hadWrongPass: true });
+        }
+        else
+            this.setState({hadWrongPass: false})    
     };
 
-    focusPassword = () =>
-    {
+    focusPassword = () => {
         this.passwordInput.focus();
-    }    
+    };
 
-    focusConfirmPassword = () =>
-    {
+    focusConfirmPassword = () => {
         this.confirmPasswordInput.focus();
-    }    
+    };
 
     render() {
         return (
@@ -37,7 +39,7 @@ export default class SignUpPage extends React.Component {
                 <TextInput
                     placeholder="Username"
                     style={styles.textInput}
-                    autoCapitalize='none'
+                    autoCapitalize="none"
                     autoCorrect={false}
                     value={this.state.username}
                     returnKeyType="next"
@@ -50,7 +52,7 @@ export default class SignUpPage extends React.Component {
                     placeholder="Password"
                     style={styles.textInput}
                     secureTextEntry={true}
-                    autoCapitalize='none'
+                    autoCapitalize="none"
                     autoCorrect={false}
                     value={this.state.password}
                     returnKeyType="next"
@@ -64,15 +66,23 @@ export default class SignUpPage extends React.Component {
                     placeholder="Confirm Password"
                     style={styles.textInput}
                     secureTextEntry={true}
-                    autoCapitalize='none'
+                    autoCapitalize="none"
                     autoCorrect={false}
-                    value={this.state.password}
+                    value={this.state.confirmPassword}
                     returnKeyType="done"
-                    onChangeText={password => this.setState({ password })}
+                    onChangeText={confirmPassword =>
+                        this.setState({ confirmPassword })
+                    }
                     underlineColorAndroid={mainAppColor}
                     ref={t => (this.confirmPasswordInput = t)}
                     onSubmitEditing={this.signUp}
                 />
+
+                {this.state.hadWrongPass && (
+                    <Text style={styles.errorMessage}>
+                        Passwords don't match
+                    </Text>
+                )}
 
                 <Text style={styles.signInText} onPress={this.signUp}>
                     Sign Up
@@ -110,5 +120,10 @@ const styles = StyleSheet.create({
         color: mainAppColor,
         marginVertical: 40,
         fontSize: 26,
+    },
+    errorMessage: {
+        fontSize: 22,
+        color: 'red',
+        marginTop: 10,
     },
 });
