@@ -1,3 +1,5 @@
+import React from 'react';
+import { StyleSheet, Image } from 'react-native';
 import { TabNavigator } from 'react-navigation';
 
 import SignInPage from './SignInPage';
@@ -5,57 +7,56 @@ import SignUpPage from './SignUpPage';
 
 const mainAppColor = '#0AB9FF';
 
-export const tabNav = TabNavigator(
+export const AuthTab = TabNavigator(
     {
         SignIn: {
             screen: SignInPage,
             navigationOptions: {
                 tabBarLabel: 'Sign In',
-                // tabBarIcon: ({ tintColor }) => (
-                //     <Picture
-                //         source={require('./src/imgs/icons/Home.png')}
-                //         size={iconSize}
-                //         tintColor={tintColor}
-                //     />
-                // ),
+                tabBarIcon: ({ tintColor }) => (
+                    <Image
+                        source={require('./signInButton.png')}
+                        style={[styles.icon, { tintColor }]}
+                    />
+                ),
             },
         },
         SignUp: {
             screen: SignUpPage,
             navigationOptions: {
                 tabBarLabel: 'Sign Up',
-                // tabBarIcon: ({ tintColor }) => (
-                //     <Picture
-                //         source={require('./src/imgs/icons/Home.png')}
-                //         size={iconSize}
-                //         tintColor={tintColor}
-                //     />
-                // ),
+                tabBarIcon: ({ tintColor }) => (
+                    <Image
+                        source={require('./signUpButton.png')}
+                        style={[styles.icon, { tintColor }]}
+                    />
+                ),
             },
         },
     },
     {
         tabBarPosition: 'bottom',
-        animationEnabled: false,
+        animationEnabled: true,
+        swipeEnabled: false,
         tabBarOptions: {
             activeTintColor: mainAppColor,
             inactiveTintColor: 'gray',
             showLabel: true,
-            showIcon: false,
+            showIcon: true,
             style: {
-                backgroundColor: mainAppColor,
+                backgroundColor: 'white',
+                borderTopWidth: 0,
+                paddingBottom: 3,
             },
-            labelStyle: {
-                fontSize: 16,
-            },
-            tabStyle: {
-                paddingVertical: 5,
-                marginVertical: 0,
-            },
-            indicatorStyle: {
-                backgroundColor: 'transparent',
-            },
+            labelStyle: { fontSize: 12 },
+            indicatorStyle: { backgroundColor: 'transparent' },
         },
-        swipeEnabled: false,
     },
 );
+
+const styles = StyleSheet.create({
+    icon: {
+        width: 26,
+        height: 26,
+    },
+});
